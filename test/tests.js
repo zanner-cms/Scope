@@ -104,23 +104,6 @@ describe('Scope', () => {
 			done();
 		});
 
-		it('Scope.count calculate Scope size', (done) => {
-			let k1 = { 'key-1': 'value-1' };
-			let k2 = { 'key-2': 'value-2' };
-			let k3 = { 'key-3': 'value-3' };
-
-			expect(Scope.init(k1, k2, k3).count).to.be.an('number').to.equal(3);
-			done();
-		});
-
-		it('Scope.keys return Scope keys in array', (done) => {
-			let k1 = { 'key-1': 'value-1' };
-			let k2 = { 'key-2': 'value-2' };
-
-			expect(Scope.init(k1, k2).keys).to.be.an('array').to.members(['key-1', 'key-2']);
-			done();
-		});
-
 		it('Scope._is check key in Scope', (done) => {
 			let k1 = { 'key-1': 'value-1' };
 			let k2 = { 'key-2': 'value-2' };
@@ -175,6 +158,23 @@ describe('Scope', () => {
 			expect(s._unset(k4)).to.false;
 			expect(s._unset('key-2')).to.true;
 			expect(s.keys).to.have.members(['key-1', 'key-3']);
+			done();
+		});
+
+		it('Scope.count calculate Scope size', (done) => {
+			let k1 = { 'key-1': 'value-1' };
+			let k2 = { 'key-2': 'value-2' };
+			let k3 = { 'key-3': 'value-3' };
+
+			expect(Scope.init(k1, k2, k3).count).to.be.an('number').to.equal(3);
+			done();
+		});
+
+		it('Scope.keys return Scope keys in array', (done) => {
+			let k1 = { 'key-1': 'value-1' };
+			let k2 = { 'key-2': 'value-2' };
+
+			expect(Scope.init(k1, k2).keys).to.be.an('array').to.members(['key-1', 'key-2']);
 			done();
 		});
 
