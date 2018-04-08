@@ -2,11 +2,8 @@
 
 'use strict';
 
-class Scope {
 
-	static init (...args) {
-		return Object.freeze(new Scope(...args));
-	}
+class Scope {
 
 	static _2key (key) {
 		return JSON.stringify(key);
@@ -16,10 +13,10 @@ class Scope {
 		return JSON.parse(key);
 	}
 
-	constructor (...args) {
-		this._scope = {};
-		this._set(...args);
+	static init (...args) {
+		return Object.freeze(new Scope(...args));
 	}
+	
 
 	get count () {
 		return Object.keys(this._scope).length;
@@ -28,6 +25,7 @@ class Scope {
 	get keys () {
 		return Object.keys(this._scope).map(key => Scope._4key(key));
 	}
+
 
 	_is (key) {
 		return Scope._2key(key) in this._scope;
@@ -52,6 +50,12 @@ class Scope {
 		throw new Error('Scope._setArray called with non-array');
 	}
 
+	_setKeyValue (key, value) {
+		const result = this._is(key);
+		this._scope[Scope._2key(key)] = value;
+		return result;
+	}
+
 	_setObject (object) {
 		if (object instanceof Object) {
 			let result = Object.keys(object).map(key => this._setKeyValue(key, object[key]), this);
@@ -60,16 +64,16 @@ class Scope {
 		throw new Error('Scope._setObject called with non-object');
 	}
 
-	_setKeyValue (key, value) {
-		const result = this._is(key);
-		this._scope[Scope._2key(key)] = value;
-		return result;
-	}
-
 	_unset (key) {
 		const result = this._is(key);
 		delete this._scope[Scope._2key(key)];
 		return result;
+	}
+
+
+	constructor (...args) {
+		this._scope = {};
+		this._set(...args);
 	}
 
 	isItem (...args) {
